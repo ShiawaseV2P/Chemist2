@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-accent="mint">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6f1">
+  <meta name="description" content="A calm, interactive chemistry study space for the periodic table, group quizzes, molecular polarity, and bonding.">
+  <title>Atom — Chemistry Study Lab</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#periodic" aria-label="Atom home" data-view-link="periodic">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-copy"><strong>atom<span>.</span></strong><small>CHEMISTRY STUDY LAB</small></span>
+      </a>
+      <div class="topbar-center"><span class="live-dot"></span><span data-i18n="studySpace">YOUR STUDY SPACE</span><span class="topbar-divider"></span><span id="dateLabel" class="date-label"></span></div>
+      <div class="topbar-actions">
+        <div class="streak-chip" title="Your quiz streak"><span>✦</span><strong id="topStreak">0</strong><small data-i18n="streak">STREAK</small></div>
+        <button class="icon-button" id="openSettings" aria-label="Open settings" title="Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1a1.8 1.8 0 0 1-2.5 2.5l-.1-.1a1.8 1.8 0 0 0-3.1 1.3v.2a1.8 1.8 0 0 1-3.6 0v-.2a1.8 1.8 0 0 0-3.1-1.3l-.1.1a1.8 1.8 0 0 1-2.5-2.5l.1-.1a1.8 1.8 0 0 0-1.3-3.1h-.2a1.8 1.8 0 0 1 0-3.6h.2a1.8 1.8 0 0 0 1.3-3.1l-.1-.1a1.8 1.8 0 0 1 2.5-2.5l.1.1a1.8 1.8 0 0 0 3.1-1.3v-.2a1.8 1.8 0 0 1 3.6 0v.2a1.8 1.8 0 0 0 3.1 1.3l.1-.1a1.8 1.8 0 0 1 2.5 2.5l-.1.1a1.8 1.8 0 0 0 1.3 3.1h.2a1.8 1.8 0 0 1 0 3.6h-.2a1.8 1.8 0 0 0-1.3 3.1Z"/></svg></button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Main navigation">
+        <div class="sidebar-label" data-i18n="workspace">WORKSPACE</div>
+        <nav class="side-nav">
+          <button class="nav-item active" data-view="periodic"><span class="nav-icon">▦</span><span data-i18n="navPeriodic">Periodic table</span><span class="nav-arrow">↗</span></button>
+          <button class="nav-item" data-view="groups"><span class="nav-icon">⌁</span><span data-i18n="navGroups">Group challenge</span><span class="nav-tag">∞</span></button>
+          <button class="nav-item" data-view="polarity"><span class="nav-icon">◉</span><span data-i18n="navPolarity">Molecular polarity</span></button>
+          <button class="nav-item" data-view="syllabus"><span class="nav-icon">▤</span><span data-i18n="navSyllabus">Chemistry syllabus</span></button>
+        </nav>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-note">
+          <div class="note-orbit">✳</div>
+          <p data-i18n="sidebarNote">Small steps make strong connections.</p>
+          <span>ATOM STUDY CLUB · 01</span>
+        </div>
+        <div class="sidebar-bottom"><span class="avatar">A</span><span><strong data-i18n="yourProgress">Your progress</strong><small id="sidebarProgress">0 answers submitted</small></span><button id="progressButton" class="mini-arrow" aria-label="Show progress">↗</button></div>
+      </aside>
+
+      <main class="main-content" id="mainContent">
+        <!-- PERIODIC TABLE -->
+        <section class="view active" id="view-periodic" aria-labelledby="periodicHeading">
+          <div class="page-heading heading-periodic">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="referenceDesk">THE REFERENCE DESK</span></div><h1 id="periodicHeading" data-i18n="periodicTitle">The periodic table<span class="title-period">.</span></h1><p class="page-subtitle" data-i18n="periodicSubtitle">118 elements, one beautifully connected system. Explore the building blocks of matter.</p></div>
+            <div class="heading-stat"><strong>118</strong><span data-i18n="knownElements">KNOWN ELEMENTS</span><i>↗</i></div>
+          </div>
+
+          <div class="periodic-toolbar panel">
+            <div class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input id="elementSearch" type="search" placeholder="Search element, symbol or atomic number..." data-i18n-placeholder="searchElement" autocomplete="off"><kbd>/</kbd></div>
+            <div class="toolbar-divider"></div>
+            <label class="filter-select"><span data-i18n="filter">FILTER</span><select id="categoryFilter" aria-label="Filter elements"><option value="all" data-i18n="allElements">All elements</option><option value="metal" data-i18n="metals">Metals</option><option value="metalloid" data-i18n="metalloids">Metalloids</option><option value="nonmetal" data-i18n="nonmetals">Nonmetals</option></select></label>
+            <button class="subtle-button" id="resetTable" data-i18n="reset">Reset ↺</button>
+          </div>
+
+          <div class="periodic-layout">
+            <div class="table-panel panel">
+              <div class="table-topline"><div class="table-caption"><span class="tiny-square"></span><strong data-i18n="elementMap">ELEMENT MAP</strong><small data-i18n="hoverTip">Hover or select an element to inspect it</small></div><div class="table-count" id="tableCount">118 / 118</div></div>
+              <div class="table-scroll" tabindex="0" aria-label="Scrollable periodic table">
+                <div class="periodic-grid" id="periodicGrid" aria-label="Interactive periodic table of all 118 elements"></div>
+                <div class="fblock-labels"><span data-i18n="lanthanoids">LANTHANOIDS</span><span data-i18n="actinoids">ACTINOIDS</span></div>
+              </div>
+              <div class="table-legend"><span><i class="legend-dot metal"></i><span data-i18n="metal">Metal</span></span><span><i class="legend-dot metalloid"></i><span data-i18n="metalloid">Metalloid</span></span><span><i class="legend-dot nonmetal"></i><span data-i18n="nonmetal">Nonmetal</span></span><span class="legend-note" data-i18n="tableLegendNote">Colour indicates broad element classification</span></div>
+            </div>
+            <aside class="element-inspector panel" id="elementInspector" aria-live="polite">
+              <div class="inspector-overline"><span class="tiny-square"></span><span data-i18n="elementProfile">ELEMENT PROFILE</span><span class="inspector-live" data-i18n="live">LIVE</span></div>
+              <div class="inspector-empty" id="inspectorEmpty"><div class="empty-orbit">✳</div><h3 data-i18n="pickElement">Pick an element</h3><p data-i18n="pickElementHelp">Select any tile on the table to reveal its atomic identity, family and outer-shell electrons.</p><span class="empty-hint">01 — 118</span></div>
+              <div class="inspector-detail hidden" id="inspectorDetail">
+                <div class="element-kicker"><span id="detailNumber">01</span><span id="detailPhase">SOLID</span></div>
+                <div class="element-symbol-large" id="detailSymbol">H</div>
+                <h2 id="detailName">Hydrogen</h2>
+                <p id="detailCategory" class="detail-category">Nonmetal</p>
+                <div class="mass-block"><span data-i18n="atomicMass">ATOMIC MASS (u)</span><strong id="detailMass">1.008</strong></div>
+                <div class="detail-grid">
+                  <div><small data-i18n="atomicNumber">ATOMIC NUMBER</small><strong id="detailAtomicNumber">1</strong></div>
+                  <div><small data-i18n="valenceElectrons">VALENCE ELECTRONS</small><strong id="detailValence">1</strong></div>
+                  <div><small data-i18n="group">GROUP</small><strong id="detailGroup">IA · 1</strong></div>
+                  <div><small data-i18n="period">PERIOD</small><strong id="detailPeriod">1</strong></div>
+                </div>
+                <div class="inspector-foot"><span data-i18n="classification">CLASSIFICATION</span><b id="detailKindPill">NONMETAL</b></div>
+              </div>
+              <div class="inspector-hint"><span>⌘</span><span data-i18n="inspectorHint">Tip: use the search above to jump to an element.</span></div>
+            </aside>
+          </div>
+          <div class="footnote-row"><span data-i18n="tableFootnote">Atomic masses are abridged values; bracketed values indicate the mass number of a representative isotope.</span><a href="https://iupac.org/what-we-do/periodic-table-of-elements/" target="_blank" rel="noreferrer">IUPAC reference ↗</a></div>
+        </section>
+
+        <!-- GROUP QUIZ -->
+        <section class="view" id="view-groups" aria-labelledby="groupsHeading">
+          <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="practiceMode">PRACTICE MODE · 01</span></div><h1 id="groupsHeading" data-i18n="groupTitle">Know your groups<span class="title-period">.</span></h1><p class="page-subtitle" data-i18n="groupSubtitle">An endless round of main-group chemistry. Identify the A-group family, one element at a time.</p></div><div class="heading-stat"><strong>∞</strong><span data-i18n="noEnd">NO ENDPOINT</span><i>↗</i></div></div>
+          <div class="quiz-stats-row"><div class="quiz-stat panel"><span data-i18n="correctAnswers">CORRECT ANSWERS</span><strong id="groupCorrect">0</strong><small data-i18n="allTime">ALL TIME</small></div><div class="quiz-stat panel"><span data-i18n="currentStreak">CURRENT STREAK</span><strong id="groupStreak">0 <em>✦</em></strong><small data-i18n="keepItGoing">KEEP IT GOING</small></div><div class="quiz-stat panel"><span data-i18n="accuracy">ACCURACY</span><strong id="groupAccuracy">—</strong><small data-i18n="basedOnAttempts">BASED ON ATTEMPTS</small></div></div>
+          <div class="quiz-layout">
+            <div class="quiz-card panel">
+              <div class="quiz-card-head"><div><span class="quiz-label"><span class="live-dot"></span><span data-i18n="endlessSession">ENDLESS SESSION</span></span><h2 data-i18n="findItsFamily">Find its family.</h2></div><span class="question-counter" id="groupQuestionCounter">QUESTION 01</span></div>
+              <div class="question-element" id="groupQuestionElement"><span class="q-atomic" id="groupQNumber">11</span><strong id="groupQSymbol">Na</strong><span id="groupQName">Sodium</span></div>
+              <p class="question-prompt" data-i18n="groupPrompt">Which traditional A group does this element belong to?</p>
+              <div class="answer-grid" id="groupAnswers">
+                <button class="answer-option" data-group="1"><span>IA</span><small>Group 1</small></button><button class="answer-option" data-group="2"><span>IIA</span><small>Group 2</small></button><button class="answer-option" data-group="13"><span>IIIA</span><small>Group 13</small></button><button class="answer-option" data-group="14"><span>IVA</span><small>Group 14</small></button><button class="answer-option" data-group="15"><span>VA</span><small>Group 15</small></button><button class="answer-option" data-group="16"><span>VIA</span><small>Group 16</small></button><button class="answer-option" data-group="17"><span>VIIA</span><small>Group 17</small></button><button class="answer-option" data-group="18"><span>VIIIA</span><small>Group 18</small></button>
+              </div>
+              <div class="answer-feedback hidden" id="groupFeedback" aria-live="polite"><div class="feedback-icon" id="groupFeedbackIcon">✓</div><div class="feedback-copy"><strong id="groupFeedbackTitle">Correct!</strong><p id="groupFeedbackText">Sodium belongs to group IA.</p><div class="answer-location" id="groupAnswerLocation"></div></div></div>
+              <div class="quiz-card-foot"><span data-i18n="scopeNote">Scope: s-block + p-block elements only</span><button class="primary-button" id="nextGroupQuestion" disabled><span data-i18n="nextQuestion">Next question</span><b>→</b></button></div>
+            </div>
+            <aside class="quiz-aside">
+              <div class="tip-card panel"><div class="tip-icon">✦</div><span data-i18n="quickRule">QUICK RULE</span><h3 data-i18n="valenceRuleTitle">The group tells a story.</h3><p data-i18n="valenceRuleText">For main-group elements, the A-group numeral (I–VIII) matches the number of valence electrons. Helium is the exception: it has 2.</p><div class="rule-pills"><span>IA · 1e⁻</span><span>IIA · 2e⁻</span><span>IIIA · 3e⁻</span><span>…</span><span>VIIIA · 8e⁻</span></div></div>
+              <div class="session-card panel"><div class="session-card-top"><span data-i18n="sessionOverview">SESSION OVERVIEW</span><span class="session-icon">◌</span></div><div class="session-number"><strong id="groupAttempts">0</strong><span data-i18n="attempts">ATTEMPTS</span></div><div class="session-bar"><span id="groupProgressBar"></span></div><p data-i18n="sessionNote">Every answer counts. Mistakes are part of the learning loop.</p><button class="text-button" id="resetGroupStats" data-i18n="resetSession">Reset session ↺</button></div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- POLARITY QUIZ -->
+        <section class="view" id="view-polarity" aria-labelledby="polarityHeading">
+          <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="conceptLab">CONCEPT LAB · 02</span></div><h1 id="polarityHeading" data-i18n="polarityTitle">Read the polarity<span class="title-period">.</span></h1><p class="page-subtitle" data-i18n="polaritySubtitle">Look beyond the bonds. Decide whether the molecule has a net dipole moment, then learn why.</p></div><div class="heading-stat"><strong>μ</strong><span data-i18n="dipoleMoment">DIPOLE MOMENT</span><i>↗</i></div></div>
+          <div class="polarity-layout">
+            <div class="polarity-card panel">
+              <div class="polarity-card-head"><span class="quiz-label"><span class="live-dot"></span><span data-i18n="oneMoleculeAtATime">ONE MOLECULE AT A TIME</span></span><span class="question-counter" id="polarityCounter">CARD 01</span></div>
+              <div class="molecule-stage"><div class="molecule-orbit orbit-one"></div><div class="molecule-orbit orbit-two"></div><div class="molecule-formula" id="moleculeFormula">H₂O</div><div class="molecule-name" id="moleculeName">Water</div><div class="molecule-shape" id="moleculeShape">BENT · AX₂E₂</div></div>
+              <p class="question-prompt" data-i18n="polarityPrompt">Does this molecule have a net molecular dipole moment?</p>
+              <div class="polarity-choices"><button id="polarYes" class="polarity-choice"><span class="choice-mark">↗</span><strong data-i18n="polar">Polar</strong><small data-i18n="unequalCharge">Net dipole ≠ 0</small></button><button id="polarNo" class="polarity-choice"><span class="choice-mark">⟷</span><strong data-i18n="nonpolar">Nonpolar</strong><small data-i18n="balancedCharge">Net dipole = 0</small></button></div>
+              <div class="polarity-feedback hidden" id="polarityFeedback" aria-live="polite"><div class="polarity-feedback-heading"><span class="feedback-icon" id="polarityFeedbackIcon">✓</span><div><strong id="polarityFeedbackTitle">Well reasoned.</strong><span id="polarityVerdict">Polar molecule</span></div><span class="polarity-status" id="polarityStatus">CORRECT</span></div><p id="polarityExplanation"></p><div class="dipole-takeaway" id="dipoleTakeaway"></div></div>
+              <div class="polarity-foot"><span data-i18n="polarityHint">Think about both bond polarity and molecular geometry.</span><button class="primary-button" id="nextMolecule" disabled><span data-i18n="nextMolecule">Next molecule</span><b>→</b></button></div>
+            </div>
+            <aside class="polarity-aside"><div class="concept-card panel"><div class="concept-eyebrow" data-i18n="rememberThis">REMEMBER THIS</div><h3 data-i18n="twoThingsMatter">Two things matter.</h3><div class="concept-step"><span>01</span><div><strong data-i18n="bondPolarity">Bond polarity</strong><p data-i18n="bondPolarityText">A difference in electronegativity creates a bond dipole.</p></div></div><div class="concept-step"><span>02</span><div><strong data-i18n="molecularGeometry">Molecular geometry</strong><p data-i18n="molecularGeometryText">The 3D arrangement decides whether bond dipoles cancel or add up.</p></div></div><div class="concept-callout"><span>∑ μ</span><p data-i18n="vectorSum">Molecular polarity is the vector sum of all bond dipoles.</p></div></div><div class="polarity-score panel"><span data-i18n="yourPolarityScore">YOUR POLARITY SCORE</span><strong id="polarityScore">0 <small>/ 0</small></strong><div class="session-bar"><span id="polarityProgressBar"></span></div><small data-i18n="correctSoFar">Correct so far</small></div></aside>
+          </div>
+        </section>
+
+        <!-- SYLLABUS -->
+        <section class="view" id="view-syllabus" aria-labelledby="syllabusHeading">
+          <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="learningLibrary">THE LEARNING LIBRARY</span></div><h1 id="syllabusHeading" data-i18n="syllabusTitle">Chemistry, connected<span class="title-period">.</span></h1><p class="page-subtitle" data-i18n="syllabusSubtitle">A guided syllabus for molecular shape, chemical bonding and orbital hybridisation.</p></div><div class="heading-stat"><strong>06</strong><span data-i18n="coreModules">CORE MODULES</span><i>↗</i></div></div>
+          <div class="syllabus-layout">
+            <aside class="syllabus-index panel"><div class="index-heading"><span data-i18n="courseIndex">COURSE INDEX</span><span>01—06</span></div><button class="syllabus-link active" data-lesson="vsepr"><span>01</span><strong>VSEPR &amp; shape</strong><b>↗</b></button><button class="syllabus-link" data-lesson="ionic"><span>02</span><strong data-i18n="ionicBonding">Ionic bonding</strong><b>↗</b></button><button class="syllabus-link" data-lesson="covalent"><span>03</span><strong data-i18n="covalentBonding">Covalent bonding</strong><b>↗</b></button><button class="syllabus-link" data-lesson="hydrogen"><span>04</span><strong data-i18n="hydrogenBonding">Hydrogen bonds</strong><b>↗</b></button><button class="syllabus-link" data-lesson="intermolecular"><span>05</span><strong data-i18n="intermolecularForces">Intermolecular forces</strong><b>↗</b></button><button class="syllabus-link" data-lesson="hybrid"><span>06</span><strong data-i18n="hybridisation">Hybridisation</strong><b>↗</b></button><div class="index-progress"><div class="index-progress-top"><span data-i18n="yourLearningPath">YOUR LEARNING PATH</span><b id="lessonProgressText">0 / 6</b></div><div class="session-bar"><span id="lessonProgressBar"></span></div><small data-i18n="markLessons">Mark lessons as read to track your progress.</small></div></aside>
+            <article class="lesson-content panel" id="lessonContent" aria-live="polite"></article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation"><button class="mobile-nav-item active" data-view="periodic"><span>▦</span><small data-i18n="navPeriodic">Table</small></button><button class="mobile-nav-item" data-view="groups"><span>⌁</span><small data-i18n="navGroups">Groups</small></button><button class="mobile-nav-item" data-view="polarity"><span>◉</span><small data-i18n="navPolarity">Polarity</small></button><button class="mobile-nav-item" data-view="syllabus"><span>▤</span><small data-i18n="navSyllabus">Syllabus</small></button><button class="mobile-nav-item" id="mobileSettings"><span>⚙</span><small data-i18n="settings">Settings</small></button></nav>
+  </div>
+
+  <!-- SETTINGS DIALOG -->
+  <dialog class="settings-dialog" id="settingsDialog">
+    <form method="dialog" class="settings-shell">
+      <div class="settings-head"><div><span class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="personalise">PERSONALISE YOUR SPACE</span></span><h2 data-i18n="settings">Settings</h2></div><button class="icon-button close-dialog" value="close" aria-label="Close settings">×</button></div>
+      <div class="settings-section"><div><strong data-i18n="appearance">Appearance</strong><small data-i18n="appearanceHelp">Make the study space feel like yours.</small></div><div class="setting-control"><label for="themeSelect" data-i18n="theme">Theme</label><select id="themeSelect"><option value="light" data-i18n="light">Light</option><option value="dark" data-i18n="dark">Dark</option><option value="system" data-i18n="system">Use device setting</option></select></div><div class="setting-control"><label data-i18n="accentColour">Accent colour</label><div class="swatches"><button type="button" class="swatch active" data-accent="mint" aria-label="Mint"></button><button type="button" class="swatch" data-accent="lavender" aria-label="Lavender"></button><button type="button" class="swatch" data-accent="ocean" aria-label="Ocean"></button><button type="button" class="swatch" data-accent="coral" aria-label="Coral"></button><button type="button" class="swatch" data-accent="amber" aria-label="Amber"></button></div></div><div class="setting-control"><label for="fontScale" data-i18n="textSize">Text size</label><select id="fontScale"><option value="small" data-i18n="small">Small</option><option value="normal" selected data-i18n="medium">Medium</option><option value="large" data-i18n="large">Large</option></select></div><label class="toggle-setting"><span><strong data-i18n="compactTable">Compact periodic table</strong><small data-i18n="compactTableHelp">Reduce tile spacing to fit more on screen.</small></span><input type="checkbox" id="compactToggle"><i></i></label><label class="toggle-setting"><span><strong data-i18n="reducedMotion">Reduce motion</strong><small data-i18n="reducedMotionHelp">Use fewer transitions and animations.</small></span><input type="checkbox" id="motionToggle"><i></i></label></div>
+      <div class="settings-section"><div><strong data-i18n="language">Language</strong><small data-i18n="languageHelp">Change the interface language.</small></div><div class="setting-control"><label for="languageSelect" data-i18n="interfaceLanguage">Interface language</label><select id="languageSelect"><option value="en">English</option><option value="id">Bahasa Indonesia</option><option value="es">Español</option><option value="fr">Français</option></select></div></div>
+      <div class="settings-section"><div><strong data-i18n="dataAndPrivacy">Data &amp; privacy</strong><small data-i18n="dataHelp">Your learning progress stays in this browser.</small></div><button type="button" class="danger-button" id="clearProgress" data-i18n="clearProgress">Clear saved progress</button></div>
+      <div class="settings-footer"><span data-i18n="settingsSaved">Changes save automatically.</span><button class="primary-button" value="close" data-i18n="done">Done <b>✓</b></button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="data/elements.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
